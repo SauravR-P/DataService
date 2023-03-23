@@ -2,7 +2,7 @@
 using MediatR;
 namespace DataService.CQRS.Query
 {
-    public class GetAllRecordsQuery : IRequest<List<Employee>>
+    public class GetAllRecordsQuery : IRequest<IReadOnlyList<Employee>>
     {
     }
 }

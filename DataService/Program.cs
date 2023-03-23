@@ -17,9 +17,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IGetAllRecords, GetAllRecords>();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-builder.Services.AddMediatR(typeof(GetAllRecords).GetTypeInfo().Assembly);
-builder.Services.AddMediatR(typeof(GetAllRecordsQuery).GetTypeInfo().Assembly);
 builder.Services.AddTransient<IRequestHandler<GetAllRecordsQuery, IReadOnlyList<Employee>>, GetAllRecordsQueryHandler>();
+//builder.Services.AddMediatR(typeof(GetAllRecords).GetTypeInfo().Assembly);
+//builder.Services.AddMediatR(typeof(GetAllRecordsQuery).GetTypeInfo().Assembly);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -28,7 +28,7 @@ builder.Services.AddDbContext<EmployeeDbContext>(options => options.UseSqlServer
 
     
 
-var app = builder.Build();
+    var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
