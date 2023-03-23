@@ -1,4 +1,5 @@
-using DataService.Model;
+using DataService.CQRS.Query;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataService.Controllers
@@ -8,18 +9,20 @@ namespace DataService.Controllers
     public class DBReadController : ControllerBase
     {
         private readonly ILogger<DBReadController> _logger;
-        private EmployeeDbContext _employeeDbContext;
+        private readonly IMediator _mediator;
 
-        public DBReadController(ILogger<DBReadController> logger, EmployeeDbContext employeeDbContext)
+        public DBReadController(ILogger<DBReadController> logger, IMediator mediator)
         {
             _logger = logger;
-            _employeeDbContext = employeeDbContext;
+            _mediator = mediator;
+      
         }
 
         [HttpGet(Name = "GetAllEmpRecord")]
-        public IEnumerable<Employee> Get()
+        public async Task<IActionResult> Get()
         {
-            return _employeeDbContext.Employee;
+            var response = await _mediator.Send(new GetAllRecordsQuery());
+                return response == null ? NotFound() : Ok(response);
         }
     }
 }
