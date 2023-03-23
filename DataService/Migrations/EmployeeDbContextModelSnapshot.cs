@@ -45,9 +45,49 @@ namespace DataService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Project_ID")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
-                    b.ToTable("Employees");
+                    b.HasIndex("Project_ID")
+                        .IsUnique();
+
+                    b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("DataService.Model.Project", b =>
+                {
+                    b.Property<int>("Project_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Project_ID"));
+
+                    b.Property<string>("Project_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Project_ID");
+
+                    b.ToTable("Project");
+                });
+
+            modelBuilder.Entity("DataService.Model.Employee", b =>
+                {
+                    b.HasOne("DataService.Model.Project", "Project")
+                        .WithOne("Employee")
+                        .HasForeignKey("DataService.Model.Employee", "Project_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("DataService.Model.Project", b =>
+                {
+                    b.Navigation("Employee")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

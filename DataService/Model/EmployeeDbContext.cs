@@ -9,6 +9,7 @@ namespace DataService.Model
             
         }
 
-        public DbSet<Employee> Employees { get; set;}
+        public DbSet<Employee> Employee { get; set;}
+        public DbSet<Project> Project { get; set;}
     }
 }
